@@ -8,12 +8,13 @@ from whoosh.qparser import QueryParser
 import search_remove_duplicate as dedupe
 import classifier_by_DT as dt
 import utilities as ut
+import copy
 
 
 def write_out(sois,outfile,fields_oi):
 
 	soi_input_fields = [x for x in sois[0].keys() if x != 'hits']
-	search_details = ['search_status','dedupe_rule','class_code']
+	search_details = ['search_status','dedupe_rule','found terms','class_code']
 	output_headers = soi_input_fields + search_details + fields_oi
 
 	with open(outfile,'wb') as fou:
@@ -26,17 +27,6 @@ def write_out(sois,outfile,fields_oi):
 				for soi_input_field in soi_input_fields:
 					o_row[soi_input_field] = soi[soi_input_field]
 				dw.writerow(o_row)
-			elif len(soi['hits']) == 1:
-				o_row = {key: '' for key in output_headers}
-				for soi_input_field in soi_input_fields:
-					o_row[soi_input_field] = soi[soi_input_field]
-				hit = soi['hits'][0]
-				for field_oi in fields_oi:
-					o_row[field_oi] = hit[field_oi]
-				o_row['search_status'] = hit['search_status']
-				o_row['dedupe_rule'] = hit['dedupe_rule']
-				o_row['class_code'] = hit['class_code']
-				dw.writerow(o_row)
 			else:
 				for hit in soi['hits']:
 					o_row = {key: '' for key in output_headers}
@@ -44,20 +34,50 @@ def write_out(sois,outfile,fields_oi):
 						o_row[soi_input_field] = soi[soi_input_field]
 					for field_oi in fields_oi:
 						o_row[field_oi] = hit[field_oi]
-					o_row['search_status'] = hit['search_status']
-					o_row['dedupe_rule'] = hit['dedupe_rule']
-					o_row['class_code'] = hit['class_code']
+					for search_detail in search_details:
+						o_row[search_detail] = hit[search_detail]
 					dw.writerow(o_row)
 
 	return outfile
 
+
 @ut.profile
 def whoosh_search(ix,soi,dt_instrument_class,country_exch_order):
-	parse_string = ' '.join('{}:{}'.format(k, v.strip("\'")) for k, v in soi.iteritems() if v)
+	search_ids = ['sedol','isin', 'cusip','corp_ticker']
+	search_options = ['country_issue_iso','exch_code','currency']
+	active_search_terms	= list()
+	active_search_terms.append(search_ids + search_options)
+
+	for search_id in search_ids:
+		for n in range(len(search_options) + 1):
+			opt = search_options[:len(search_options) -  n]
+			active_search_terms.append([str(search_id)] + opt)
+
+	exit = False
+	while not exit:
+		for active_search_term in active_search_terms:
+			parse_string = ' '.join('{}:{}'.format(k, v.strip("\'"))
+									for k, v in soi.iteritems() if k in active_search_term and v.strip())
+			soi['hits'] = execute_search(ix, parse_string, soi, dt_instrument_class, country_exch_order)
+			if not soi['hits'] == None:
+				for hit in soi['hits']:
+					hit['found terms'] = parse_string
+				break
+		exit = True
+
+
+	# parse_string = ' '.join('{}:{}'.format(k, v.strip("\'")) for k, v in soi.iteritems() if k in active_search_terms and v)
+	# soi['hits'] = execute_search(ix,parse_string,soi,dt_instrument_class, country_exch_order)
+
+
+@ut.profile
+def execute_search(ix,parse_string,soi,dt_instrument_class, country_exch_order):
 	with ix.searcher() as searcher:
 		query = QueryParser("isin", ix.schema).parse(parse_string)
+		# isin is the default search field if the parse_string does not provide a search field
 		results = searcher.search(query, limit=None)
-		soi['hits'] = dedupe.remove_duplicates([result['raw_data'] for result in results],dt_instrument_class,country_exch_order)
+		return dedupe.remove_duplicates([result['raw_data'] for result in results],dt_instrument_class, country_exch_order)
+
 
 def load_soi(soi_file_in):
 	with open(soi_file_in, 'rb') as file:
@@ -84,7 +104,7 @@ def main(index_base_path,vendor_code,index_type,
 	for soi in sois:
 		whoosh_search(ix, soi,dt_instrument_class,country_exch_order)
 		counter += 1
-		if counter % 1000 == 0:
+		if counter % 10 == 0:
 			print counter, datetime.datetime.now() - start_time
 
 	print counter
