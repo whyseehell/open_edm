@@ -1,7 +1,18 @@
+'''
+Created on 09 may 2018
+
+@author: yves.coupez
+'''
+
 import os
 from collections import Iterator
 
+
 class BoReader(Iterator):
+	'''
+	BoReader is an iterator sub-class that reads a Bloomberg back office file and return each row as Python dictionary
+	'''
+
 
 	def	__init__(self, path,filename):
 
@@ -12,6 +23,7 @@ class BoReader(Iterator):
 
 		self.read_bo_standard_file(path, filename)
 
+
 	def read_bo_standard_file(self,path,filename):
 		input_file = os.path.join(path,filename)
 		with open(input_file, "r") as file:
@@ -21,6 +33,7 @@ class BoReader(Iterator):
 			headers = [x for x in headers.split("\n") if "#" not in x and x != ""]
 			self.headers = ['col_zero', 'error_code', 'nbr_fields'] + headers
 			self.values = [x.split("|") for x in fields.split("\n") if x]
+
 
 	def next(self):
 		if not self.values:

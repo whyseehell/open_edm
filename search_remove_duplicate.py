@@ -1,3 +1,9 @@
+"""
+Created on 09 may 2018
+
+@author: yves.coupez
+"""
+
 import classifier_by_DT as dt
 import utilities as ut
 
@@ -115,7 +121,7 @@ def classify(results,dt_instrument_class):
 		result['class_code'] = ''.join(luaction[k] for k in luaction.keys())
 
 @ut.profile
-def remove_duplicates(results,dt_instrument_class,country_exch_order):
+def select_security(results, dt_instrument_class, country_exch_order):
 
 	rules_to_apply = [select_asset_not_derivative,select_primary,select_local_line,select_by_pfd_country_issue,select_exch_country]#,]
 	if results:
@@ -127,6 +133,6 @@ def remove_duplicates(results,dt_instrument_class,country_exch_order):
 
 if __name__ == "__main__":
 	results = list()
-	remove_duplicates(results)
+	select_security(results)
 
 	ut.print_prof_data()

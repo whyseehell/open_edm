@@ -1,3 +1,9 @@
+"""
+Created on 09 may 2018
+
+@author: yves.coupez
+"""
+
 import os
 import csv
 from collections import defaultdict
@@ -5,7 +11,13 @@ import collections
 import time
 from functools import wraps
 
+
 def load_country_exch_order(ffname):
+	'''
+
+	:param ffname: fully qualified filename of the file holding the ordered hierachy of exchnagce by country
+	:return: a dictionay keyed on country and exchange with each entry holdign the rank of the excahnge int he country
+	'''
 	country_exch_order = defaultdict(dict)
 
 	with open(ffname, 'rb') as file_data:

@@ -1,14 +1,18 @@
+'''
+Created on 09 may 2018
+
+@author: yves.coupez
+'''
+
 from datetime import datetime
 import os
 import csv
-from collections import namedtuple
 from whoosh import index
 from whoosh.fields import *
 from whoosh.qparser import QueryParser
 import search_remove_duplicate as dedupe
 import classifier_by_DT as dt
 import utilities as ut
-import copy
 
 
 def write_out(sois,outfile,fields_oi):
@@ -85,7 +89,7 @@ def execute_search(ix,parse_string,soi,dt_instrument_class, country_exch_order):
 		query = QueryParser("isin", ix.schema).parse(parse_string)
 		# isin is the default search field if the parse_string does not provide a search field
 		results = searcher.search(query, limit=None)
-		return dedupe.remove_duplicates([result['raw_data'] for result in results],dt_instrument_class, country_exch_order)
+		return dedupe.select_security([result['raw_data'] for result in results], dt_instrument_class, country_exch_order)
 
 
 def load_soi(soi_file_in):
@@ -114,9 +118,9 @@ def main(index_base_path,vendor_code,index_type,mode,
 		whoosh_search(ix, soi,mode,dt_instrument_class,country_exch_order)
 		counter += 1
 		if counter % 10 == 0:
-			print counter, datetime.datetime.now() - start_time
+			print 'soi rows processed so far: {} in {}'.format(counter, datetime.datetime.now() - start_time)
 
-	print counter
+	print 'soi rows processed: {} in {}'.format(counter, datetime.datetime.now() - start_time)
 	output_file = write_out(sois,os.path.join(soi_path,soi_result),fields_oi)
 
 	print output_file
