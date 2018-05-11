@@ -42,28 +42,37 @@ def write_out(sois,outfile,fields_oi):
 
 
 @ut.profile
-def whoosh_search(ix,soi,dt_instrument_class,country_exch_order):
+def whoosh_search(ix,soi,mode,dt_instrument_class,country_exch_order):
 	search_ids = ['sedol','isin', 'cusip','corp_ticker']
 	search_options = ['country_issue_iso','exch_code','currency']
 	active_search_terms	= list()
 	active_search_terms.append(search_ids + search_options)
 
-	for search_id in search_ids:
-		for n in range(len(search_options) + 1):
-			opt = search_options[:len(search_options) -  n]
-			active_search_terms.append([str(search_id)] + opt)
+	if mode == 'hierarchical':
 
-	exit = False
-	while not exit:
-		for active_search_term in active_search_terms:
-			parse_string = ' '.join('{}:{}'.format(k, v.strip("\'"))
-									for k, v in soi.iteritems() if k in active_search_term and v.strip())
-			soi['hits'] = execute_search(ix, parse_string, soi, dt_instrument_class, country_exch_order)
-			if not soi['hits'] == None:
-				for hit in soi['hits']:
-					hit['found terms'] = parse_string
-				break
-		exit = True
+		for search_id in search_ids:
+			for n in range(len(search_options) + 1):
+				opt = search_options[:len(search_options) -  n]
+				active_search_terms.append([str(search_id)] + opt)
+
+		exit = False
+		while not exit:
+			for active_search_term in active_search_terms:
+				parse_string = ' '.join('{}:{}'.format(k, v.strip("\'"))
+										for k, v in soi.iteritems() if k in active_search_term and v.strip())
+				soi['hits'] = execute_search(ix, parse_string, soi, dt_instrument_class, country_exch_order)
+				if not soi['hits'] == None:
+					for hit in soi['hits']:
+						hit['found terms'] = parse_string
+					break
+			exit = True
+	elif mode == 'and_terms':
+		parse_string = ' '.join('{}:{}'.format(k, v.strip("\'"))
+								for k, v in soi.iteritems() if k in active_search_terms[0] and v.strip())
+		soi['hits'] = execute_search(ix, parse_string, soi, dt_instrument_class, country_exch_order)
+		if not soi['hits'] == None:
+			for hit in soi['hits']:
+				hit['found terms'] = parse_string
 
 
 	# parse_string = ' '.join('{}:{}'.format(k, v.strip("\'")) for k, v in soi.iteritems() if k in active_search_terms and v)
@@ -84,7 +93,7 @@ def load_soi(soi_file_in):
 		reader = csv.DictReader(file, delimiter=',')
 		return list(reader)
 
-def main(index_base_path,vendor_code,index_type,
+def main(index_base_path,vendor_code,index_type,mode,
 		 soi_path,soi_file,soi_result,fields_oi,
 		 ref_data_path,DT_instrument_classifier,country_exch_order_filename):
 
@@ -102,7 +111,7 @@ def main(index_base_path,vendor_code,index_type,
 	sois = load_soi(os.path.join(soi_path,soi_file))
 	counter = 0
 	for soi in sois:
-		whoosh_search(ix, soi,dt_instrument_class,country_exch_order)
+		whoosh_search(ix, soi,mode,dt_instrument_class,country_exch_order)
 		counter += 1
 		if counter % 10 == 0:
 			print counter, datetime.datetime.now() - start_time
@@ -123,6 +132,7 @@ if __name__ == "__main__":
 	index_type = 'Instrument'
 	soi_path = '/Users/yvescoupez/PycharmProjects/data'
 	soi_file = 'soi_aapl_demo.csv'
+	search_mode = 'and_terms'# 'and_terms' # 'hierarchical'
 	soi_result = 'soi_aapl_demo_results.csv'
 	fields_oi = ['TICKER','EXCH_CODE','NAME','CRNCY','ID_SEDOL1','ID_ISIN','ID_CUSIP','CNTRY_ISSUE_ISO',
 				 'SEDOL1_COUNTRY_ISO','MARKET_STATUS','REL_INDEX','LONG_COMP_NAME','CNTRY_OF_DOMICILE','EQY_SH_OUT',
@@ -132,7 +142,7 @@ if __name__ == "__main__":
 	DT_instrument_classifier = 'DT_instrument_classifier.csv'
 	country_exch_order_filename = 'country_exch_order.csv'
 
-	main(index_base_path,vendor_code,index_type,soi_path,soi_file,soi_result,fields_oi,ref_data_path,DT_instrument_classifier,country_exch_order_filename)
+	main(index_base_path,vendor_code,index_type,search_mode,soi_path,soi_file,soi_result,fields_oi,ref_data_path,DT_instrument_classifier,country_exch_order_filename)
 
 	end_time = datetime.datetime.now()
 
