@@ -40,19 +40,14 @@ def main(index_base_path,vendor_code,index_type,data_file_path,data_file_list):
 	quit()
 
 
-
-
-
-
 if __name__ == "__main__":
-	vendor_code = 'ven_bbg'
 	index_base_path = '/Users/yvescoupez/PycharmProjects/data/Indices'
+	vendor_code = 'ven_bbg'
 	index_type = 'Instrument'
-	data_path = '/Users/yvescoupez/PycharmProjects/data/bo_files'
 
+	data_path = '/Users/yvescoupez/PycharmProjects/data/bo_files'
 	file_list = ['equity_namr.out.gz.enc.20170824', 'equity_euro.out.gz.enc.20170824',
 				 'equity_asia1.out.gz.enc.20170825', 'equity_asia2.out.gz.enc.20170824',
 				 'equity_lamr.out.gz.enc.20170824']
-	search_terms = {'isin': 'US0378331005', 'currency': 'EUR'}  # ,'sedol':'4033819'
 	main(index_base_path,vendor_code,index_type,data_path,file_list)
 

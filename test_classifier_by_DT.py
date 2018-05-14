@@ -11,7 +11,7 @@ import classifier_by_DT as dt
 class TestClassifier(unittest.TestCase):
 
 	def setUp(self):
-		self.dt_ref_dt = dt.read_lu(os.path.join('./data', 'DT_test_ref_data.csv'))
+		self.dt_ref_dt = dt.read_lu(os.path.join('./data/reference', 'DT_test_ref_data.csv'))
 
 	def test_case_1(self):
 		facts = {'cond_1': 'abc', 'cond_2': 'def', 'cond_3': 'hijk'}

@@ -29,10 +29,10 @@ class BoReader(Iterator):
 		with open(input_file, "r") as file:
 			data = file.read()
 			headers = data[data.find(self.start_headers) + len(self.start_headers):data.find(self.end_headers)]
-			fields = data[data.find(self.start_fields) + len(self.start_fields):data.find(self.end_fields)]
+			row_values = data[data.find(self.start_fields) + len(self.start_fields):data.find(self.end_fields)]
 			headers = [x for x in headers.split("\n") if "#" not in x and x != ""]
 			self.headers = ['col_zero', 'error_code', 'nbr_fields'] + headers
-			self.values = [x.split("|") for x in fields.split("\n") if x]
+			self.values = [x.split("|") for x in row_values.split("\n") if x]
 
 
 	def next(self):

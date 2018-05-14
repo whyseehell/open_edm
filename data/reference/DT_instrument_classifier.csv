@@ -1,0 +1,42 @@
+SECURITY_TYP,SECURITY_TYP2,,category,group,attribute_1
+Bond,Bond/Note,,E,M,X
+Conv Bond,Bond/Note,,E,M,X
+Participate Cert,Certificate,,E,M,X
+Common Stock,Common Stock,,E,S,X
+Foreign Sh.,Common Stock,,E,M,X
+Royalty Trst,Common Stock,,E,M,X
+Savings Share,Common Stock,,E,M,X
+Tracking Stk,Common Stock,,E,M,X
+ADR,Depositary Receipt,,E,S,A
+BDR,Depositary Receipt,,E,S,A
+Belgium Cert,Depositary Receipt,,E,S,A
+CDI,Depositary Receipt,,E,S,A
+CEDEAR,Depositary Receipt,,E,S,A
+Dutch Cert,Depositary Receipt,,E,S,A
+GDR,Depositary Receipt,,E,S,A
+German Cert,Depositary Receipt,,E,S,A
+HDR,Depositary Receipt,,E,S,A
+IDR,Depositary Receipt,,E,S,A
+NVDR,Depositary Receipt,,E,S,A
+NY Reg Shrs,Depositary Receipt,,E,S,A
+RDC,Depositary Receipt,,E,S,A
+Receipt,Depositary Receipt,,E,S,A
+SDR,Depositary Receipt,,E,S,A
+TDR,Depositary Receipt,,E,S,A
+FDIC,FDIC,,C,M,X
+Closed-End Fund,Mutual Fund,,C,I,X
+ETP,Mutual Fund,,C,E,X
+FIDC,Mutual Fund,,C,M,X
+Fund of Funds,Mutual Fund,,C,F,X
+Mutual Fund,Mutual Fund,,C,M,X
+Open-End Fund,Mutual Fund,,C,B,X
+Pvt Eqty Fund,Mutual Fund,,C,S,X
+Misc.,N.A.,,M,M,X
+Sec Lending,N.A.,,E,M,X
+Ltd Part,Partnership Shares,,E,L,X
+MLP,Partnership Shares,,E,L,X
+Preference,Preference,,E,R,X
+REIT,REIT,,E,S,V
+Right,Right,,R,S,X
+Stapled Security,Unit,,E,M,X
+Unit,Unit,,C,F,X

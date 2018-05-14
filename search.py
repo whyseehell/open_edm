@@ -10,7 +10,7 @@ import csv
 from whoosh import index
 from whoosh.fields import *
 from whoosh.qparser import QueryParser
-import search_remove_duplicate as dedupe
+import select_securities as dedupe
 import classifier_by_DT as dt
 import utilities as ut
 
@@ -18,7 +18,7 @@ import utilities as ut
 def write_out(sois,outfile,fields_oi):
 
 	soi_input_fields = [x for x in sois[0].keys() if x != 'hits']
-	search_details = ['search_status','dedupe_rule','found terms','class_code']
+	search_details = ['search_status','selection_rule','found terms','class_code']
 	output_headers = soi_input_fields + search_details + fields_oi
 
 	with open(outfile,'wb') as fou:
@@ -48,7 +48,7 @@ def write_out(sois,outfile,fields_oi):
 @ut.profile
 def whoosh_search(ix,soi,mode,dt_instrument_class,country_exch_order):
 	search_ids = ['sedol','isin', 'cusip','corp_ticker']
-	search_options = ['country_issue_iso','exch_code','currency']
+	search_options = ['country_issue_iso','currency','exch_code']
 	active_search_terms	= list()
 	active_search_terms.append(search_ids + search_options)
 
@@ -70,7 +70,7 @@ def whoosh_search(ix,soi,mode,dt_instrument_class,country_exch_order):
 						hit['found terms'] = parse_string
 					break
 			exit = True
-	elif mode == 'and_terms':
+	elif mode == 'and_all_terms':
 		parse_string = ' '.join('{}:{}'.format(k, v.strip("\'"))
 								for k, v in soi.iteritems() if k in active_search_terms[0] and v.strip())
 		soi['hits'] = execute_search(ix, parse_string, soi, dt_instrument_class, country_exch_order)
@@ -134,21 +134,20 @@ if __name__ == "__main__":
 	vendor_code = 'ven_bbg'
 	index_base_path = '/Users/yvescoupez/PycharmProjects/data/Indices'
 	index_type = 'Instrument'
-	soi_path = '/Users/yvescoupez/PycharmProjects/data'
+	soi_path = './data'
 	soi_file = 'soi_aapl_demo.csv'
-	search_mode = 'and_terms'# 'and_terms' # 'hierarchical'
+	search_mode = 'hierarchical'# 'and_all_terms' # 'hierarchical'
 	soi_result = 'soi_aapl_demo_results.csv'
 	fields_oi = ['TICKER','EXCH_CODE','NAME','CRNCY','ID_SEDOL1','ID_ISIN','ID_CUSIP','CNTRY_ISSUE_ISO',
 				 'SEDOL1_COUNTRY_ISO','MARKET_STATUS','REL_INDEX','LONG_COMP_NAME','CNTRY_OF_DOMICILE','EQY_SH_OUT',
 				 'EQY_PRIM_EXCH','EQY_PRIM_SECURITY_CRNCY','EQY_PRIM_SECURITY_TICKER']
 
-	ref_data_path = '/Users/yvescoupez/PycharmProjects/data/reference'
+	ref_data_path = './data/reference'
 	DT_instrument_classifier = 'DT_instrument_classifier.csv'
 	country_exch_order_filename = 'country_exch_order.csv'
 
-	main(index_base_path,vendor_code,index_type,search_mode,soi_path,soi_file,soi_result,fields_oi,ref_data_path,DT_instrument_classifier,country_exch_order_filename)
+	main(index_base_path,vendor_code,index_type,search_mode,soi_path,soi_file,soi_result,fields_oi,
+		 ref_data_path,DT_instrument_classifier,country_exch_order_filename)
 
-	end_time = datetime.datetime.now()
-
-	print end_time - start_time
+	print datetime.datetime.now() - start_time
 	ut.print_prof_data()

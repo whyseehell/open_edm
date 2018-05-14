@@ -102,14 +102,14 @@ def apply_removal_rules(rules_to_apply,results,country_exch_order):
 		deleted, left = r(left,country_exch_order)
 
 		if len(left) == 1:
-			left[0]['dedupe_rule'] = r.__name__
-			left[0]['search_status'] = 'dedupe success'
+			left[0]['selection_rule'] = r.__name__
+			left[0]['search_status'] = 'selection success'
 			return left
 
 		else:
 			for l in left:
-				l['dedupe_rule'] = r.__name__
-				l['search_status'] = 'dedupe incomplete'
+				l['selection_rule'] = r.__name__
+				l['search_status'] = 'selection incomplete'
 
 
 	return left

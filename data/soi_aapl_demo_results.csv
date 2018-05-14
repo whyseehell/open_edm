@@ -1,0 +1,20 @@
+cusip,corp_ticker,exch_code,country_issue_iso,currency,sedol,isin,search_status,selection_rule,found terms,class_code,TICKER,EXCH_CODE,NAME,CRNCY,ID_SEDOL1,ID_ISIN,ID_CUSIP,CNTRY_ISSUE_ISO,SEDOL1_COUNTRY_ISO,MARKET_STATUS,REL_INDEX,LONG_COMP_NAME,CNTRY_OF_DOMICILE,EQY_SH_OUT,EQY_PRIM_EXCH,EQY_PRIM_SECURITY_CRNCY,EQY_PRIM_SECURITY_TICKER
+,,,,,,US0378331005,selection success,select_primary,isin:US0378331005,ESX,AAPL,US,APPLE INC,USD,2046251,US0378331005,037833100,US,US,ACTV,SPX,Apple Inc,US,5165.228,NASDAQ GS,USD,AAPL
+037833100',,,,,,,selection success,select_primary,cusip:037833100,ESX,AAPL,US,APPLE INC,USD,2046251,US0378331005,037833100,US,US,ACTV,SPX,Apple Inc,US,5165.228,NASDAQ GS,USD,AAPL
+,,,,EUR,,US0378331005,selection success,select_exch_country,currency:EUR isin:US0378331005,ESX,APC,GR,APPLE INC,EUR,4033819,US0378331005,037833100,DE,DE,ACTV,DAX,Apple Inc,US,5165.228,Xetra Stars,USD,AAPL
+,,,,,4033819,,selection success,select_exch_country,sedol:4033819,ESX,APC,GR,APPLE INC,EUR,4033819,US0378331005,037833100,DE,DE,ACTV,DAX,Apple Inc,US,5165.228,Xetra Stars,USD,AAPL
+,,,DE,,4033819,,selection success,select_exch_country,country_issue_iso:DE sedol:4033819,ESX,APC,GR,APPLE INC,EUR,4033819,US0378331005,037833100,DE,DE,ACTV,DAX,Apple Inc,US,5165.228,Xetra Stars,USD,AAPL
+,,,,,,DE000A1TNV91,selection success,select_primary,isin:DE000A1TNV91,ESX,ADE,GR,BITCOIN GROUP SE,EUR,BBCR986,DE000A1TNV91,N.A.,DE,DE,ACTV,DAX,Bitcoin Group SE,DE,.300,Xetra,EUR,ADE
+,,,,,,CA31866Q2099,selection success,select_asset_not_derivative,isin:CA31866Q2099,CEX,RWX/B,CN,FIRST ASSET MSCI LOW RISK ET,CAD,BYZP1S2,CA31866Q2099,31866Q209,CA,CA,PEND,SPTSX,First Asset Msci International Low Risk Weighted Etf,CA,N.A.,Toronto,CAD,RWX/B
+,,,,,,CNE100002DD9,selection success,select_primary,isin:CNE100002DD9,ESX,300558,CH,BETTA PHARMACEUTICALS CO L-A,CNY,BYPCYC8,CNE100002DD9,N.A.,CN,CN,ACTV,SZ399006,Betta Pharmaceuticals Co Ltd,CN,401.000,Shenzhen,CNY,300558
+,,,,,,PG000A143KS8,selection success,select_primary,isin:PG000A143KS8,ESX,KSL,AU,KINA SECURITIES LTD,AUD,BYWSCK3,PG000A143KS8,N.A.,AU,AU,ACTV,AS51,Kina Securities Ltd,PG,163.993,ASE,AUD,KSL
+,AAPL,,,,,,selection success,select_primary,corp_ticker:AAPL,ESX,AAPL,US,APPLE INC,USD,2046251,US0378331005,037833100,US,US,ACTV,SPX,Apple Inc,US,5165.228,NASDAQ GS,USD,AAPL
+,AAPL,,,EUR,,,selection success,select_exch_country,corp_ticker:AAPL currency:EUR,ESX,APC,GR,APPLE INC,EUR,4033819,US0378331005,037833100,DE,DE,ACTV,DAX,Apple Inc,US,5165.228,Xetra Stars,USD,AAPL
+,,,,,2046251,,selection success,select_primary,sedol:2046251,ESX,AAPL,US,APPLE INC,USD,2046251,US0378331005,037833100,US,US,ACTV,SPX,Apple Inc,US,5165.228,NASDAQ GS,USD,AAPL
+abcd,,,,,,US0378331005,Not found,,,,,,,,,,,,,,,,,,,,
+dummy,,,DE,,dummy,US0378331005,Not found,,,,,,,,,,,,,,,,,,,,
+dummy,AAPL,,DE,,dummy,dummy,Not found,,,,,,,,,,,,,,,,,,,,
+dummy,AAPL,,,EUR,dummy,dummy,Not found,,,,,,,,,,,,,,,,,,,,
+dummy,AAPL,,,dummy,dummy,dummy,Not found,,,,,,,,,,,,,,,,,,,,
+dummy,,,,,dummy,dummy,Not found,,,,,,,,,,,,,,,,,,,,
+dummy,dummy,dummy,dummy,dummy,dummy,US0378331005,Not found,,,,,,,,,,,,,,,,,,,,
