@@ -37,7 +37,7 @@ def write_out(sois,outfile,fields_oi):
 					for soi_input_field in soi_input_fields:
 						o_row[soi_input_field] = soi[soi_input_field]
 					for field_oi in fields_oi:
-						o_row[field_oi] = hit[field_oi]
+						o_row[field_oi] = hit[field_oi] if field_oi in hit.keys() else ''
 					for search_detail in search_details:
 						o_row[search_detail] = hit[search_detail]
 					dw.writerow(o_row)

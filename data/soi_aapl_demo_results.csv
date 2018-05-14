@@ -11,10 +11,10 @@ cusip,corp_ticker,exch_code,country_issue_iso,currency,sedol,isin,search_status,
 ,AAPL,,,,,,selection success,select_primary,corp_ticker:AAPL,ESX,AAPL,US,APPLE INC,USD,2046251,US0378331005,037833100,US,US,ACTV,SPX,Apple Inc,US,5165.228,NASDAQ GS,USD,AAPL
 ,AAPL,,,EUR,,,selection success,select_exch_country,corp_ticker:AAPL currency:EUR,ESX,APC,GR,APPLE INC,EUR,4033819,US0378331005,037833100,DE,DE,ACTV,DAX,Apple Inc,US,5165.228,Xetra Stars,USD,AAPL
 ,,,,,2046251,,selection success,select_primary,sedol:2046251,ESX,AAPL,US,APPLE INC,USD,2046251,US0378331005,037833100,US,US,ACTV,SPX,Apple Inc,US,5165.228,NASDAQ GS,USD,AAPL
-abcd,,,,,,US0378331005,Not found,,,,,,,,,,,,,,,,,,,,
-dummy,,,DE,,dummy,US0378331005,Not found,,,,,,,,,,,,,,,,,,,,
-dummy,AAPL,,DE,,dummy,dummy,Not found,,,,,,,,,,,,,,,,,,,,
-dummy,AAPL,,,EUR,dummy,dummy,Not found,,,,,,,,,,,,,,,,,,,,
-dummy,AAPL,,,dummy,dummy,dummy,Not found,,,,,,,,,,,,,,,,,,,,
+abcd,,,,,,US0378331005,selection success,select_primary,isin:US0378331005,ESX,AAPL,US,APPLE INC,USD,2046251,US0378331005,037833100,US,US,ACTV,SPX,Apple Inc,US,5165.228,NASDAQ GS,USD,AAPL
+dummy,,,DE,,dummy,US0378331005,selection success,select_exch_country,country_issue_iso:DE isin:US0378331005,ESX,APC,GR,APPLE INC,EUR,4033819,US0378331005,037833100,DE,DE,ACTV,DAX,Apple Inc,US,5165.228,Xetra Stars,USD,AAPL
+dummy,AAPL,,DE,,dummy,dummy,selection success,select_exch_country,corp_ticker:AAPL country_issue_iso:DE,ESX,APC,GR,APPLE INC,EUR,4033819,US0378331005,037833100,DE,DE,ACTV,DAX,Apple Inc,US,5165.228,Xetra Stars,USD,AAPL
+dummy,AAPL,,,EUR,dummy,dummy,selection success,select_exch_country,corp_ticker:AAPL currency:EUR,ESX,APC,GR,APPLE INC,EUR,4033819,US0378331005,037833100,DE,DE,ACTV,DAX,Apple Inc,US,5165.228,Xetra Stars,USD,AAPL
+dummy,AAPL,,,dummy,dummy,dummy,selection success,select_primary,corp_ticker:AAPL,ESX,AAPL,US,APPLE INC,USD,2046251,US0378331005,037833100,US,US,ACTV,SPX,Apple Inc,US,5165.228,NASDAQ GS,USD,AAPL
 dummy,,,,,dummy,dummy,Not found,,,,,,,,,,,,,,,,,,,,
-dummy,dummy,dummy,dummy,dummy,dummy,US0378331005,Not found,,,,,,,,,,,,,,,,,,,,
+dummy,dummy,dummy,dummy,dummy,dummy,US0378331005,selection success,select_primary,isin:US0378331005,ESX,AAPL,US,APPLE INC,USD,2046251,US0378331005,037833100,US,US,ACTV,SPX,Apple Inc,US,5165.228,NASDAQ GS,USD,AAPL
