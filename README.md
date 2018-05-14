@@ -48,8 +48,8 @@ The search has 2 modes:
  - 'hierarchical':	if the search fails to return a hit for "and_all_terms", it will 
 						try each identifier and with each optional parameters until it has a hit.
 						The identifiers and optional search parameters have an order of preference
-						search_ids = ['sedol','isin', 'cusip','corp_ticker']
-						search_options = ['country_issue_iso','currency','exch_code']
+	search_ids = ['sedol','isin', 'cusip','corp_ticker'], 
+	search_options = ['country_issue_iso','currency','exch_code']
 
 If the search returns more then one hit the search includes a process to select a security 
 based on an hierarchy of rules (select_securities.py). The search will return all hits left
@@ -58,9 +58,9 @@ based on an hierarchy of rules (select_securities.py). The search will return al
 The output file includes 3 sections:
  - soi input: echo the soi 
  - a search report with:
- - search_status: "not found",
-						 "selection success" (one hit left),
-						 "selection incomplete" (more than one hit left)
+ 	- search_status: "not found",
+					 "selection success" (one hit left),
+					 "selection incomplete" (more than one hit left)
 	- selection_rule: the last rule exercised that reduced the data to 1 hit
 	- found terms: the search term(s) that returned a result from the index search
 	- class_code: a security classifier returned by classifier_by_DT.py
