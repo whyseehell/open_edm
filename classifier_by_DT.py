@@ -15,7 +15,8 @@ from collections import OrderedDict
 def read_lu(ffname):
 	'''
 
-	:param ffname:
+	:param ffname: a fully qualified file name. The file is a CSV with condtion columns separated from action
+					columns by an ampty column
 	:return:
 	'''
 
@@ -32,7 +33,7 @@ def read_lu(ffname):
 			for condition in conditions:
 				val = row[condition].strip()
 				if val and val != '*':
-					if val.startswith(tuple(["<", ">", "=="])):
+					if val.startswith(tuple(["<", ">", "==","<=",">="])):
 						lu_conditions[condition] = val
 					elif str(val).isdigit():
 						lu_conditions[condition] = '== {}'.format(val)

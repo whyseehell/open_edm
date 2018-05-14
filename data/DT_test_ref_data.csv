@@ -1,0 +1,10 @@
+cond_1,cond_2,cond_3,,action_1,action_2
+abc,def,hijk,,all_text 3 condtions,row1
+def,abc,,,all_text 2 condtions,row2
+def,2,3,,numeric equal,row3
+2,3,4,,all numbers eq,row4
+abc,> 11,< 9,,numbers compare 1,row5
+abc,> 11,> 9,,numbers compare 2,row6
+qaz,== 12,wer,,numbers compare 3,row7
+qaz,<= 2,wer,,numbers compare 4,row8
+qaz,>= 99,< 6,,numbers compare 5,row9
