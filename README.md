@@ -35,17 +35,17 @@ interest" (SOI).
 
 The SOI file (soi_aapl_demo.csv in the example) allows to define the securities of interest.
 It includes:
-	- identifiers: isin,cusip,sedol,corp_ticker. 
+ - identifiers: isin,cusip,sedol,corp_ticker. 
 				   Any number of identifiers can be provided (see search mode)
 				   It could include vendor identifiers such as FIGI or RIC
 				
-	- optional search parameters: country_issue_iso,exch_code,currency. 
+- optional search parameters: country_issue_iso,exch_code,currency. 
 								These are optional parameters. Any number can be provided
 								
 The search has 2 modes:
-	-'and_all_terms': uses a logical AND with all the search term provided. 
+ - 'and_all_terms': uses a logical AND with all the search term provided. 
 					  The search will return a hit only if all terms are found
-	-'hierarchical':	if the search fails to return a hit for "and_all_terms", it will 
+ - 'hierarchical':	if the search fails to return a hit for "and_all_terms", it will 
 						try each identifier and with each optional parameters until it has a hit.
 						The identifiers and optional search parameters have an order of preference
 						search_ids = ['sedol','isin', 'cusip','corp_ticker']
@@ -56,30 +56,30 @@ based on an hierarchy of rules (select_securities.py). The search will return al
  at the end of the selection process.
  
 The output file includes 3 sections:
-	- soi input: echo the soi 
-	- a search report with:
-		- search_status: "not found",
+ - soi input: echo the soi 
+ - a search report with:
+ - search_status: "not found",
 						 "selection success" (one hit left),
 						 "selection incomplete" (more than one hit left)
-		- selection_rule: the last rule exercised that reduced the data to 1 hit
-		- found terms: the search term(s) that returned a result from the index search
-		- class_code: a security classifier returned by classifier_by_DT.py
-	- the list of fields for which data was extracted from the vendor files
+	- selection_rule: the last rule exercised that reduced the data to 1 hit
+	- found terms: the search term(s) that returned a result from the index search
+	- class_code: a security classifier returned by classifier_by_DT.py
+ - the list of fields for which data was extracted from the vendor files
 	
 To run search.py the following parameters are required:
-	- for the index location:
-	 	- index_base_path = location of the directory that hosts the indices
- 		- vendor_code = location of the directory holding the indices for each vendor
-		- index_type = location of the directory for an index (schema)  
-	- for the soi:
-		- soi_path = location of the directory holding soi file
-		- soi_file = the name of the soi file (as a csv file)
-		- soi_result = the name of the result file
-	- for the search mode:
-		- search_mode = as either 'and_all_terms' or 'hierarchical'
-		- fields_oi = fields of interest. The list of fields for which data will be 
-						extracted, provided as a python list  
+ - for the index location:
+	- index_base_path = location of the directory that hosts the indices
+	- vendor_code = location of the directory holding the indices for each vendor
+	- index_type = location of the directory for an index (schema)  
+ - for the soi:
+	- soi_path = location of the directory holding soi file
+	- soi_file = the name of the soi file (as a csv file)
+	- soi_result = the name of the result file
+ - for the search mode:
+	- search_mode = as either 'and_all_terms' or 'hierarchical'
+	- fields_oi = fields of interest. The list of fields for which data will be 
+				 extracted, provided as a python list  
 							
 To run:
-	- run index_file.py once or as required by the file update cycle
-	- run search.py as needed
+ - run index_file.py once or as required by the file update cycle
+ - run search.py as needed
