@@ -8,7 +8,7 @@ multiple vendors, asset types and data types.
 
 vendor adapter: an iterator class that return each row featured in a  data vendor file as 
 python data dictionary. The example provided is bbg_standard_file_reader.py  that returns 
-the data from a Bloomberg back office file. Try the code with the equity_<region>.out files.
+the data from a Bloomberg back office file. Try the code with the equity_"region".out files.
 
 The process start with the indexing of the file data. Each row in the data files is stored 
 as a whoosh index (http://whoosh.readthedocs.io/en/latest/index.html) document 
@@ -23,7 +23,7 @@ and then add each row returned by the vendor adapter as an index document.
 parameters needed for indexing:
  - for the index location
  	- index_base_path = location of the directory that hosts the indices
- 	- vendor_code = location of the directory holding the indices for each vendor
+ 	- vendor_code = location of the sub-directory holding the indices for each vendor
 	- index_type = location of the directory for an index (schema) 
  - for the data to read and index
  	- data_path: the directory holding the data files
@@ -69,7 +69,7 @@ The output file includes 3 sections:
 To run search.py the following parameters are required:
  - for the index location:
 	- index_base_path = location of the directory that hosts the indices
-	- vendor_code = location of the directory holding the indices for each vendor
+	- vendor_code = location of the sub-directory holding the indices for each vendor
 	- index_type = location of the directory for an index (schema)  
  - for the soi:
 	- soi_path = location of the directory holding soi file
