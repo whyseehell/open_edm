@@ -12,6 +12,14 @@ import time
 from functools import wraps
 
 
+def load_file_in_list(ffname):
+	with open(os.path.join('/Users/yvescoupez/Documents/GitHub/open_edm/data','fields_to_extract.txt'),'rb') as fi:
+		answer = list(fi.read().split('\n'))
+	return answer
+	
+# ===============================================================================
+
+
 def load_country_exch_order(ffname):
 	'''
 
