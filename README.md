@@ -15,10 +15,11 @@ as a whoosh index (http://whoosh.readthedocs.io/en/latest/index.html) document
 with a number of fields extracted as index searchable values.
 
 create_index.py defines the index schema and creates the whoosh index. It is called by 
-index_file.py. The schema provided is for a Bloomberg equity instrument
+index_file.py. The schema provided is for an instrument
 
 index_file.py first clears the current contents of the index by calling create_index.py 
-and then add each row returned by the vendor adapter as an index document.
+and then add each row returned by the vendor adapter as an index document. The example 
+mapping is for a Bloomberg equity instrument
 
 parameters needed for indexing:
  - for the index location
@@ -55,7 +56,10 @@ If the search returns more then one hit the search includes a process to select 
 based on an hierarchy of rules (select_securities.py). The search will return all hits left
  at the end of the selection process.
  
-The output file includes 3 sections:
+Last, the hits are run through a Cerberus validator (http://docs.python-cerberus.org/en/stable/index.html)
+ using the validator scheme defined in validate_schema parameter
+ 
+The output file includes 4 sections:
  - soi input: echo the soi 
  - a search report with:
  	- search_status: "not found",
@@ -65,6 +69,7 @@ The output file includes 3 sections:
 	- found terms: the search term(s) that returned a result from the index search
 	- class_code: a security classifier returned by classifier_by_DT.py
  - the list of fields for which data was extracted from the vendor files
+ - the last column (validate_errors) reports the validation errors 
 	
 To run search.py the following parameters are required:
  - for the index location:
@@ -79,6 +84,8 @@ To run search.py the following parameters are required:
 	- search_mode = as either 'and_all_terms' or 'hierarchical'
 	- fields_oi = fields of interest. The list of fields for which data will be 
 				 extracted, provided as a python list  
+ - for the validation:		
+	 - validate_schema =  a Cerberus scheme dictionary
 							
 To run:
  - run index_file.py once or as required by the file update cycle
