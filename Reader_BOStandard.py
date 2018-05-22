@@ -5,10 +5,8 @@ Created on 09 may 2018
 '''
 
 import os
-from collections import Iterator
 
-
-class BoReader(Iterator):
+class Reader_BOStandard(object):
 	'''
 	BoReader is an iterator sub-class that reads a Bloomberg back office file and return each row as Python dictionary
 	'''
@@ -20,6 +18,9 @@ class BoReader(Iterator):
 		self.end_headers = "END-OF-FIELDS"
 		self.start_fields = "START-OF-DATA"
 		self.end_fields = "END-OF-DATA"
+
+		self.headers = list()
+		self.values = list()
 
 		self.read_bo_standard_file(path, filename)
 
@@ -35,7 +36,4 @@ class BoReader(Iterator):
 			self.values = [x.split("|") for x in row_values.split("\n") if x]
 
 
-	def next(self):
-		if not self.values:
-			raise StopIteration
-		return dict(zip(self.headers, self.values.pop()))
+

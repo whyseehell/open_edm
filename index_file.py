@@ -1,14 +1,14 @@
-import bbg_standard_file_reader as bbgr
-from datetime import datetime
+
 from whoosh import index
 import os
 
 import create_index as cidx
 
+import DataFileIterator as dfi
 
 
 
-def main(index_base_path,vendor_code,index_type,data_file_path,data_file_list):
+def main(index_base_path,vendor_code,index_type,data_file_type,data_file_path,data_file_list):
 	if cidx.create_whoosh_idx(os.path.join(index_base_path,vendor_code),index_type):
 		print "sucess index creation at -->: ",os.path.join(index_base_path,vendor_code,index_type)
 	else:
@@ -22,7 +22,7 @@ def main(index_base_path,vendor_code,index_type,data_file_path,data_file_list):
 		for file in file_list:
 			print "indexing file : ", file
 			idx_writer = ix.writer()
-			data_reader = bbgr.BoReader(data_file_path, file)
+			data_reader = dfi.DataFileIterator(data_file_type,data_file_path, file)
 			for iRecord in data_reader:
 				idx_writer.add_document(isin=unicode(iRecord.get('ID_ISIN', None), "utf-8"),
 										sedol=unicode(iRecord.get('ID_SEDOL1', None), "utf-8"),
@@ -45,9 +45,10 @@ if __name__ == "__main__":
 	vendor_code = 'ven_bbg'
 	index_type = 'Instrument'
 
+	data_file_type = 'BOStandard'
 	data_path = '/Users/yvescoupez/PycharmProjects/data/bo_files'
 	file_list = ['equity_namr.out.gz.enc.20170824', 'equity_euro.out.gz.enc.20170824',
 				 'equity_asia1.out.gz.enc.20170825', 'equity_asia2.out.gz.enc.20170824',
 				 'equity_lamr.out.gz.enc.20170824']
-	main(index_base_path,vendor_code,index_type,data_path,file_list)
+	main(index_base_path,vendor_code,index_type,data_file_type,data_path,file_list)
 
