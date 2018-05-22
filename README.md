@@ -6,9 +6,16 @@ A demonstrator of a simple ETL for financial data that can be expanded to cater 
 multiple vendors, asset types and data types.
 
 
-vendor adapter: an iterator class that return each row featured in a  data vendor file as 
-python data dictionary. The example provided is bbg_standard_file_reader.py  that returns 
-the data from a Bloomberg back office file. Try the code with the equity_"region".out files.
+DataFileIterator.py an iterator class that return each row featured in a  data vendor file as 
+python data dictionary. It relies on data sources adapter classes to read the files and 
+prepare the data for the iteration. There are 2 adapters provided that can be used as follows:
+
+data_file_type  | adapter                  | description
+
+BOStandard      | Reader_BOStandard.py     | read a standard Bloomberg back office file.
+TextHeaderComma | Reader_TextwithHeader.py | reads a text file with a header row, comma separated
+TextHeaderTab   | Reader_TextwithHeader.py | reads a text file with a header row, tab separated
+
 
 The process start with the indexing of the file data. Each row in the data files is stored 
 as a whoosh index (http://whoosh.readthedocs.io/en/latest/index.html) document 
@@ -18,8 +25,8 @@ create_index.py defines the index schema and creates the whoosh index. It is cal
 index_file.py. The schema provided is for an instrument
 
 index_file.py first clears the current contents of the index by calling create_index.py 
-and then add each row returned by the vendor adapter as an index document. The example 
-mapping is for a Bloomberg equity instrument
+and then add each row returned by the DataFileIterator as an index document. The example 
+mapping is for a Bloomberg equity instrument using the files such as equity_region.out files.
 
 parameters needed for indexing:
  - for the index location
@@ -27,6 +34,7 @@ parameters needed for indexing:
  	- vendor_code = location of the sub-directory holding the indices for each vendor
 	- index_type = location of the directory for an index (schema) 
  - for the data to read and index
+ 	- data_file_type: the type of file structure as one of [BOStandard,TextHeaderComma,TextHeaderTab]
  	- data_path: the directory holding the data files
  	- file_list: the list of files to read provided as a python list
 
